@@ -15,7 +15,8 @@ class Buttons : MainWindow
 	this(string n)
 	{
                 number = n;
-                t["kernel linus"] = (s) => writef("https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=%s", s);
+                t["kernel git"] = (s) => writef("https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=%s", s);
+                t["glibc git"] = (s) => writef("https://sourceware.org/git/?p=glibc.git;a=commit;h=%s", s);
                 t["suse bugzilla"] = (s) => writef("https://bugzilla.suse.com/show_bug.cgi?id=%s", s);
                 t["redhat bugzilla"] = (s) => writef("https://bugzilla.redhat.com/show_bug.cgi?id=%s", s);
                 t["gcc bugzilla"] = (s) => writef("https://gcc.gnu.org/bugzilla/show_bug.cgi?id=%s", s);
