@@ -3,7 +3,6 @@ import gtk.Button;
 import gtk.Main;
 import gtk.VBox;
 import std.stdio;
-import std.format;
 import std.string;
 
 private import stdlib = core.stdc.stdlib : exit;
