@@ -1,0 +1,9 @@
+dflags = -O3 -I/usr/include/d/gtkd-3/ -L -lgtkd-3
+dc = ldc2
+
+name = gui_transform
+
+rule compile
+  command = $dc $dflags $in -of=$out
+
+build $name: compile $name.d
