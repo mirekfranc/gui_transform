@@ -46,12 +46,14 @@ class Buttons : MainWindow
 	}
 
         void searchChanged(SearchEntry entry) {
-                string s = entry.getText();
+                string[] keywords = entry.getText().split;
                 foreach(v; bs) {
-                        if (indexOf(v.getLabel(), s) >= 0)
-                                v.show();
-                        else
-                                v.hide();
+                        v.show();
+                        foreach(k; keywords)
+                                if (indexOf(v.getLabel(), k) < 0) {
+                                        v.hide();
+                                        break;
+                                }
                 }
         }
 
