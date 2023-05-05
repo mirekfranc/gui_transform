@@ -15,7 +15,7 @@ private string[string] t;
 
 private class Buttons : MainWindow
 {
-        static string number;
+        string number;
         Button[] bs;
 	this(string n)
 	{
@@ -66,7 +66,7 @@ void main(string[] args)
         if ((line = readln().strip) is null)
                 stdlib.exit(1);
 	Main.init(args);
-	new Buttons(line);
+	new Buttons(line.strip_bug_noise);
 	Main.run();
 }
 
@@ -84,4 +84,13 @@ private void load_file(string path)
                         continue;
                 t[key] = value;
         }
+}
+
+private string strip_bug_noise(string s)
+{
+        if (s.startsWith("bsc") || s.startsWith("bnc") || s.startsWith("bug"))
+                s = s[3..$];
+        if (s.startsWith("PR") || s.startsWith("pr") || s.startsWith("RH") || s.startsWith("rh"))
+                s = s[2..$];
+        return s.stripLeft("# ");
 }
