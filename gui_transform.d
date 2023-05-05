@@ -6,25 +6,20 @@ import gtk.VBox;
 import std.stdio;
 import std.string;
 import std.algorithm;
+import std.file;
+import std.path;
 
 private import stdlib = core.stdc.stdlib : exit;
 
-string[string] t;
+private string[string] t;
 
-class Buttons : MainWindow
+private class Buttons : MainWindow
 {
         static string number;
         Button[] bs;
 	this(string n)
 	{
                 number = n;
-                t["kernel git"] = "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=%s";
-                t["glibc git"] = "https://sourceware.org/git/?p=glibc.git;a=commit;h=%s";
-                t["suse bugzilla"] = "https://bugzilla.suse.com/show_bug.cgi?id=%s";
-                t["redhat bugzilla"] = "https://bugzilla.redhat.com/show_bug.cgi?id=%s";
-                t["gcc bugzilla"] = "https://gcc.gnu.org/bugzilla/show_bug.cgi?id=%s";
-                t["sourceware bugzilla"] = "https://sourceware.org/bugzilla/show_bug.cgi?id=%s";
-
 
 		super("Gui Transform");
                 VBox vbox = new VBox(false, 5);
@@ -40,7 +35,6 @@ class Buttons : MainWindow
                         vbox.add(exitbtn);
                         bs ~= exitbtn;
                 }
-
 
 		add(vbox);
 		showAll();
@@ -67,10 +61,27 @@ class Buttons : MainWindow
 
 void main(string[] args)
 {
+        load_file(expandTilde("~/.gui_transform"));
         string line;
         if ((line = readln().strip) is null)
                 stdlib.exit(1);
 	Main.init(args);
 	new Buttons(line);
 	Main.run();
+}
+
+private void load_file(string path)
+{
+        auto f = File(path);
+        string l;
+        while ((l = f.readln().strip) !is null) {
+                if (l.length < 1 || l.startsWith("#"))
+                        continue;
+                const string[] fields = l.split(",");
+                const string key = fields[0].strip;
+                const string value = fields[1].strip;
+                if (key.length < 1 || value.length < 1)
+                        continue;
+                t[key] = value;
+        }
 }
