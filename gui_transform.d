@@ -5,6 +5,7 @@ import gtk.Main;
 import gtk.VBox;
 import std.stdio;
 import std.string;
+import std.algorithm;
 
 private import stdlib = core.stdc.stdlib : exit;
 
@@ -32,7 +33,7 @@ class Buttons : MainWindow
                 entry.addOnSearchChanged(&searchChanged);
                 vbox.add(entry);
 
-                foreach (s, _; t) {
+                foreach (s; sort(t.keys)) {
                         Button exitbtn = new Button();
                         exitbtn.setLabel(s);
                         exitbtn.addOnClicked(&exitProg);
