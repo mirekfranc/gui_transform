@@ -8,7 +8,7 @@ import std.string;
 
 private import stdlib = core.stdc.stdlib : exit;
 
-void function(string)[string] t;
+string[string] t;
 
 class Buttons : MainWindow
 {
@@ -17,12 +17,12 @@ class Buttons : MainWindow
 	this(string n)
 	{
                 number = n;
-                t["kernel git"] = (s) => writef("https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=%s", s);
-                t["glibc git"] = (s) => writef("https://sourceware.org/git/?p=glibc.git;a=commit;h=%s", s);
-                t["suse bugzilla"] = (s) => writef("https://bugzilla.suse.com/show_bug.cgi?id=%s", s);
-                t["redhat bugzilla"] = (s) => writef("https://bugzilla.redhat.com/show_bug.cgi?id=%s", s);
-                t["gcc bugzilla"] = (s) => writef("https://gcc.gnu.org/bugzilla/show_bug.cgi?id=%s", s);
-                t["sourceware bugzilla"] = (s) => writef("https://sourceware.org/bugzilla/show_bug.cgi?id=%s", s);
+                t["kernel git"] = "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=%s";
+                t["glibc git"] = "https://sourceware.org/git/?p=glibc.git;a=commit;h=%s";
+                t["suse bugzilla"] = "https://bugzilla.suse.com/show_bug.cgi?id=%s";
+                t["redhat bugzilla"] = "https://bugzilla.redhat.com/show_bug.cgi?id=%s";
+                t["gcc bugzilla"] = "https://gcc.gnu.org/bugzilla/show_bug.cgi?id=%s";
+                t["sourceware bugzilla"] = "https://sourceware.org/bugzilla/show_bug.cgi?id=%s";
 
 
 		super("Gui Transform");
@@ -59,7 +59,7 @@ class Buttons : MainWindow
 
 	void exitProg(Button button)
         {
-                t[button.getLabel()](number);
+                writef(t[button.getLabel()], number);
                 stdlib.exit(0);
         }
 }
