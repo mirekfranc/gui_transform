@@ -73,7 +73,7 @@ private class Buttons : MainWindow
 
 void main(string[] args)
 {
-        load_config(expandTilde(conf_name));
+        load_config(expandTilde(args.length == 2 ? args[1] : conf_name));
         string line;
         if ((line = readln().strip) is null)
                 stdlib.exit(1);
