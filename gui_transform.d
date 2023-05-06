@@ -11,6 +11,7 @@ import std.path;
 
 private import stdlib = core.stdc.stdlib : exit;
 
+private string conf_name = "~/.gui_transform";
 private string[string] t;
 
 private class Buttons : MainWindow
@@ -61,7 +62,8 @@ private class Buttons : MainWindow
 
 void main(string[] args)
 {
-        load_file(expandTilde("~/.gui_transform"));
+        if (!load_config(expandTilde(conf_name)))
+                stdlib.exit(1);
         string line;
         if ((line = readln().strip) is null)
                 stdlib.exit(1);
@@ -70,20 +72,28 @@ void main(string[] args)
 	Main.run();
 }
 
-private void load_file(string path)
+private bool load_config(string path)
 {
-        auto f = File(path);
-        string l;
-        while ((l = f.readln().strip) !is null) {
-                if (l.length < 1 || l.startsWith("#"))
-                        continue;
-                const string[] fields = l.split(",");
-                const string key = fields[0].strip;
-                const string value = fields[1].strip;
-                if (key.length < 1 || value.length < 1)
-                        continue;
-                t[key] = value;
+        try {
+                auto f = File(path);
+                string l;
+                while ((l = f.readln().strip) !is null) {
+                        if (l.length < 1 || l.startsWith("#"))
+                                continue;
+                        const string[] fields = l.split(",");
+                        const string key = fields[0].strip;
+                        const string value = fields[1].strip;
+                        if (key.length < 1 || value.length < 1)
+                                continue;
+                        t[key] = value;
+                }
         }
+        catch (Exception e)
+        {
+                writef("error reading config: " ~ path);
+                return false;
+        }
+        return true;
 }
 
 private string strip_bug_noise(string s)
