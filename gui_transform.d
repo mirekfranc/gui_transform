@@ -73,8 +73,7 @@ private class Buttons : MainWindow
 
 void main(string[] args)
 {
-        if (!load_config(expandTilde(conf_name)))
-                stdlib.exit(1);
+        load_config(expandTilde(conf_name));
         string line;
         if ((line = readln().strip) is null)
                 stdlib.exit(1);
@@ -83,7 +82,7 @@ void main(string[] args)
 	Main.run();
 }
 
-private bool load_config(string path)
+private void load_config(string path)
 {
         try {
                 auto f = File(path);
@@ -99,18 +98,14 @@ private bool load_config(string path)
                         if (key.length < 1 || value.length < 1)
                                 continue;
                         t[key] = value;
-                        if (fields.length < 3)
-                                label_css ~= make_style(key, "#eeeeee");
-                        else
-                                label_css ~= make_style(key, fields[2].strip);
+                        label_css ~= make_style(key, fields.length < 3 ? "#eeeeee" : fields[2].strip);
                 }
         }
         catch (Exception e)
         {
                 writef(e.msg);
-                return false;
+                stdlib.exit(1);
         }
-        return true;
 }
 
 private string strip_bug_noise(string s)
