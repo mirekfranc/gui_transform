@@ -90,7 +90,7 @@ private bool load_config(string path)
         }
         catch (Exception e)
         {
-                writef("error reading config: " ~ path);
+                writef(e.msg);
                 return false;
         }
         return true;
