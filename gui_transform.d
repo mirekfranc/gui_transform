@@ -1,6 +1,7 @@
 import gtk.MainWindow;
 import gtk.Button;
 import gtk.SearchEntry;
+import gtk.CssProvider;
 import gtk.Main;
 import gtk.VBox;
 import std.stdio;
@@ -14,6 +15,8 @@ private import stdlib = core.stdc.stdlib : exit;
 private string conf_name = "~/.gui_transform";
 private string[string] t;
 
+private enum LABEL_CSS = ".red { color: red; } .green { color: green; } .cyan { color: cyan; }";
+
 private class Buttons : MainWindow
 {
         string number;
@@ -25,6 +28,9 @@ private class Buttons : MainWindow
 		super("Gui Transform");
                 VBox vbox = new VBox(false, 5);
 
+                CssProvider css = new CssProvider();
+                css.loadFromData(LABEL_CSS);
+
                 SearchEntry entry = new SearchEntry();
                 entry.addOnSearchChanged(&searchChanged);
                 vbox.add(entry);
@@ -33,6 +39,14 @@ private class Buttons : MainWindow
                         Button exitbtn = new Button();
                         exitbtn.setLabel(s);
                         exitbtn.addOnClicked(&exitProg);
+                        auto ctx = exitbtn.getStyleContext();
+                        if (indexOf(s, "suse") >= 0)
+                                ctx.addClass("green");
+                        else if (indexOf(s, "redhat") >= 0)
+                                ctx.addClass("red");
+                        else
+                                ctx.addClass("cyan");
+                        ctx.addProvider(css, GTK_STYLE_PROVIDER_PRIORITY_USER);
                         vbox.add(exitbtn);
                         bs ~= exitbtn;
                 }
