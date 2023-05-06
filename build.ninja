@@ -1,4 +1,4 @@
-dflags = -O3 -I/usr/include/d/gtkd-3/ -L -lgtkd-3
+dflags = -O3 --fvisibility=hidden --linker=lld -I/usr/include/d/gtkd-3/ -L -lgtkd-3
 dc = ldc2
 
 name = gui_transform
