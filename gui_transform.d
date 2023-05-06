@@ -1,3 +1,5 @@
+import gdk.Keysyms;
+import gtk.Widget;
 import gtk.MainWindow;
 import gtk.Button;
 import gtk.SearchEntry;
@@ -19,11 +21,11 @@ private string label_css;
 
 private class Buttons : MainWindow
 {
-        string number;
+        string input;
         Button[] bs;
-	this(string n)
+	this(string _input)
 	{
-                number = n;
+                input = _input;
 
 		super("Gui Transform");
                 VBox vbox = new VBox(false, 5);
@@ -33,6 +35,9 @@ private class Buttons : MainWindow
 
                 SearchEntry entry = new SearchEntry();
                 entry.addOnSearchChanged(&searchChanged);
+                entry.addOnKeyPress(&handleKeys);
+
+                vbox.addOnKeyPress(&handleKeys);
                 vbox.add(entry);
 
                 foreach (s; sort(t.keys)) {
@@ -50,6 +55,15 @@ private class Buttons : MainWindow
 		showAll();
 	}
 
+        bool handleKeys(GdkEventKey* e, Widget w)
+        {
+                if (e.keyval == GdkKeysyms.GDK_Escape) {
+                        writef(input);
+                        stdlib.exit(0);
+                }
+                return false;
+        }
+
         void searchChanged(SearchEntry entry) {
                 string[] keywords = entry.getText().split;
                 foreach (v; bs) {
@@ -66,7 +80,7 @@ private class Buttons : MainWindow
 
 	void exitProg(Button button)
         {
-                writef(t[button.getLabel()], number);
+                writef(t[button.getLabel()], input.strip_noise);
                 stdlib.exit(0);
         }
 }
@@ -75,10 +89,10 @@ void main(string[] args)
 {
         load_config(expandTilde(args.length == 2 ? args[1] : conf_name));
         string line;
-        if ((line = readln().strip) is null)
+        if ((line = readln()) is null)
                 stdlib.exit(1);
 	Main.init(args);
-	new Buttons(line.strip_bug_noise);
+	new Buttons(line);
 	Main.run();
 }
 
@@ -108,8 +122,9 @@ private void load_config(string path)
         }
 }
 
-private string strip_bug_noise(string s)
+private string strip_noise(string s)
 {
+        s = s.strip();
         if (s.startsWith("bsc") || s.startsWith("bnc") || s.startsWith("bug"))
                 s = s[3..$];
         if (s.startsWith("PR") || s.startsWith("pr") || s.startsWith("RH") || s.startsWith("rh"))
