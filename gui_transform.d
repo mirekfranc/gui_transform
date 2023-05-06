@@ -43,13 +43,15 @@ private class Buttons : MainWindow
 
         void searchChanged(SearchEntry entry) {
                 string[] keywords = entry.getText().split;
-                foreach(v; bs) {
-                        v.show();
-                        foreach(k; keywords)
+                foreach (v; bs) {
+                        bool to_show = true;
+                        foreach (k; keywords)
                                 if (indexOf(v.getLabel(), k) < 0) {
                                         v.hide();
+                                        to_show = false;
                                         break;
                                 }
+                        if (to_show) v.show();
                 }
         }
 
