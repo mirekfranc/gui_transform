@@ -1,8 +1,9 @@
 # ~/.gui_transform
-# not really safe, but I don't want to deal with validation at this point, just avoid recompiling
-kernel git,https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=%s
-glibc git,https://sourceware.org/git/?p=glibc.git;a=commit;h=%s
-suse bugzilla,https://bugzilla.suse.com/show_bug.cgi?id=%s
-redhat bugzilla,https://bugzilla.redhat.com/show_bug.cgi?id=%s
-gcc bugzilla,https://gcc.gnu.org/bugzilla/show_bug.cgi?id=%s
-sourceware bugzilla,https://sourceware.org/bugzilla/show_bug.cgi?id=%s
+
+# labal, format string, text color (optional)
+kernel git, https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=%s, #ee33ff
+glibc git, https://sourceware.org/git/?p=glibc.git;a=commit;h=%s
+suse bugzilla, https://bugzilla.suse.com/show_bug.cgi?id=%s, #11ff11
+redhat bugzilla, https://bugzilla.redhat.com/show_bug.cgi?id=%s, #ff1111
+gcc bugzilla, https://gcc.gnu.org/bugzilla/show_bug.cgi?id=%s
+sourceware bugzilla, https://sourceware.org/bugzilla/show_bug.cgi?id=%s

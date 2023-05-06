@@ -12,10 +12,10 @@ import std.path;
 
 private import stdlib = core.stdc.stdlib : exit;
 
-private string conf_name = "~/.gui_transform";
-private string[string] t;
+private enum conf_name = "~/.gui_transform";
 
-private enum LABEL_CSS = ".red { color: red; } .green { color: green; } .cyan { color: cyan; }";
+private string[string] t;
+private string label_css;
 
 private class Buttons : MainWindow
 {
@@ -29,7 +29,7 @@ private class Buttons : MainWindow
                 VBox vbox = new VBox(false, 5);
 
                 CssProvider css = new CssProvider();
-                css.loadFromData(LABEL_CSS);
+                css.loadFromData(label_css);
 
                 SearchEntry entry = new SearchEntry();
                 entry.addOnSearchChanged(&searchChanged);
@@ -40,12 +40,7 @@ private class Buttons : MainWindow
                         exitbtn.setLabel(s);
                         exitbtn.addOnClicked(&exitProg);
                         auto ctx = exitbtn.getStyleContext();
-                        if (indexOf(s, "suse") >= 0)
-                                ctx.addClass("green");
-                        else if (indexOf(s, "redhat") >= 0)
-                                ctx.addClass("red");
-                        else
-                                ctx.addClass("cyan");
+                        ctx.addClass(s.label_to_class);
                         ctx.addProvider(css, GTK_STYLE_PROVIDER_PRIORITY_USER);
                         vbox.add(exitbtn);
                         bs ~= exitbtn;
@@ -97,11 +92,17 @@ private bool load_config(string path)
                         if (l.length < 1 || l.startsWith("#"))
                                 continue;
                         const string[] fields = l.split(",");
+                        if (fields.length < 2)
+                                continue;
                         const string key = fields[0].strip;
                         const string value = fields[1].strip;
                         if (key.length < 1 || value.length < 1)
                                 continue;
                         t[key] = value;
+                        if (fields.length < 3)
+                                label_css ~= make_style(key, "#eeeeee");
+                        else
+                                label_css ~= make_style(key, fields[2].strip);
                 }
         }
         catch (Exception e)
@@ -119,4 +120,14 @@ private string strip_bug_noise(string s)
         if (s.startsWith("PR") || s.startsWith("pr") || s.startsWith("RH") || s.startsWith("rh"))
                 s = s[2..$];
         return s.stripLeft("# ");
+}
+
+private string label_to_class(string s)
+{
+        return s.replace(' ', '_');
+}
+
+private string make_style(string s, string color)
+{
+        return format(".%s { color: %s; } ", s.label_to_class, color);
 }
