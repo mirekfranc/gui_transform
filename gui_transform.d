@@ -58,7 +58,7 @@ private class Buttons : MainWindow
         bool handleKeys(GdkEventKey* e, Widget w)
         {
                 if (e.keyval == GdkKeysyms.GDK_Escape) {
-                        writef(input);
+                        write(input);
                         stdlib.exit(0);
                 }
                 return false;
@@ -117,7 +117,7 @@ private void load_config(string path)
         }
         catch (Exception e)
         {
-                writef(e.msg);
+                write(e.msg);
                 stdlib.exit(1);
         }
 }
