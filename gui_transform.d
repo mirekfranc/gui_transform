@@ -141,9 +141,9 @@ private void load_config(string path)
 private string strip_noise(string s)
 {
         s = s.strip();
-        if (s.startsWith("bsc") || s.startsWith("bnc") || s.startsWith("bug"))
+        if (["bsc", "bnc", "bug"].any!((string pfx) => s.startsWith(pfx)))
                 s = s[3..$];
-        if (s.startsWith("PR") || s.startsWith("pr") || s.startsWith("RH") || s.startsWith("rh"))
+        if (["PR", "pr", "RH", "rh"].any!((string pfx) => s.startsWith(pfx)))
                 s = s[2..$];
         return s.stripLeft("# ");
 }
