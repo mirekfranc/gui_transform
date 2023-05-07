@@ -3,6 +3,7 @@ import gtk.Widget;
 import gtk.MainWindow;
 import gtk.Button;
 import gtk.SearchEntry;
+import gtk.Entry;
 import gtk.CssProvider;
 import gtk.Main;
 import gtk.VBox;
@@ -36,6 +37,7 @@ private class Buttons : MainWindow
                 SearchEntry entry = new SearchEntry();
                 entry.addOnSearchChanged(&searchChanged);
                 entry.addOnKeyPress(&handleKeys);
+                entry.addOnActivate(&handleEnter);
 
                 vbox.addOnKeyPress(&handleKeys);
                 vbox.add(entry);
@@ -62,6 +64,22 @@ private class Buttons : MainWindow
                         stdlib.exit(0);
                 }
                 return false;
+        }
+
+        void handleEnter(Entry entry)
+        {
+                Button tmp;
+                int counter = 0;
+                foreach (v; bs)
+                        if (v.isVisible()) {
+                                tmp = v;
+                                if (++counter > 1)
+                                        return;
+                        }
+                if (counter == 1) {
+                        writef(t[tmp.getLabel()], input.strip_noise);
+                        stdlib.exit(0);
+                }
         }
 
         void searchChanged(SearchEntry entry) {
