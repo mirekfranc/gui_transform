@@ -24,11 +24,11 @@ private class Buttons : MainWindow
 {
         string input;
         Button[] bs;
-	this(string _input)
-	{
+        this(string _input)
+        {
                 input = _input;
 
-		super("Gui Transform");
+                super("Gui Transform");
                 VBox vbox = new VBox(false, 5);
 
                 CssProvider css = new CssProvider();
@@ -53,9 +53,9 @@ private class Buttons : MainWindow
                         bs ~= exitbtn;
                 }
 
-		add(vbox);
-		showAll();
-	}
+                add(vbox);
+                showAll();
+        }
 
         bool handleKeys(GdkEventKey* e, Widget w)
         {
@@ -94,7 +94,7 @@ private class Buttons : MainWindow
                 }
         }
 
-	void exitProg(Button button)
+        void exitProg(Button button)
         {
                 writef(t[button.getLabel()], input.strip_noise);
                 stdlib.exit(0);
@@ -107,9 +107,9 @@ void main(string[] args)
         string line;
         if ((line = readln()) is null)
                 stdlib.exit(1);
-	Main.init(args);
-	new Buttons(line);
-	Main.run();
+        Main.init(args);
+        new Buttons(line);
+        Main.run();
 }
 
 private void load_config(string path)
