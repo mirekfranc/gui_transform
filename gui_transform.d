@@ -76,10 +76,8 @@ private class Buttons : MainWindow
                                 if (++counter > 1)
                                         return;
                         }
-                if (counter == 1) {
-                        writef(t[tmp.getLabel()], input.strip_noise);
-                        stdlib.exit(0);
-                }
+                if (counter == 1)
+                        exitProg(tmp);
         }
 
         void searchChanged(SearchEntry entry) {
