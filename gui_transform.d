@@ -141,7 +141,7 @@ private void load_config(string path)
 private string strip_noise(string s)
 {
         s = s.strip();
-        if (["bsc", "bnc", "bug"].any!((string pfx) => s.startsWith(pfx)))
+        if (["bsc", "bnc", "bug", "Bug"].any!((string pfx) => s.startsWith(pfx)))
                 s = s[3..$];
         if (["PR", "pr", "RH", "rh"].any!((string pfx) => s.startsWith(pfx)))
                 s = s[2..$];
