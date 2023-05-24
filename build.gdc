@@ -1,0 +1,9 @@
+dflags = -O3 -fvisibility=hidden -fuse-ld=lld -I/usr/include/d/gtkd-3/ -lgtkd-3
+dc = gdc
+
+name = gui_transform
+
+rule compile
+  command = $dc $dflags $in -o $out
+
+build $name: compile $name.d
