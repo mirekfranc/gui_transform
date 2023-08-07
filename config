@@ -3,9 +3,11 @@
 # labal, format string, text color (optional)
 kernel git, https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=%s, #ee33ff
 glibc git, https://sourceware.org/git/?p=glibc.git;a=commit;h=%s
+gcc git, https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=%s
 suse bugzilla, https://bugzilla.suse.com/show_bug.cgi?id=%s, #11ff11
 redhat bugzilla, https://bugzilla.redhat.com/show_bug.cgi?id=%s, #ff1111
 gcc bugzilla, https://gcc.gnu.org/bugzilla/show_bug.cgi?id=%s
 sourceware bugzilla, https://sourceware.org/bugzilla/show_bug.cgi?id=%s
 kde bugzilla, https://bugs.kde.org/show_bug.cgi?id=%s, brown
 kernel bugzilla, https://bugzilla.kernel.org/show_bug.cgi?id=%s, brown
+urban dictionary, https://www.urbandictionary.com/define.php?term=%s, yellow
