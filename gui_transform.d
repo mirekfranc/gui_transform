@@ -141,6 +141,8 @@ private void load_config(string path)
 private string strip_noise(string s)
 {
         s = s.strip();
+        if (s.startsWith("jsc#PED-"))
+                s = s[8..$];
         if (["bsc", "bnc", "bug", "Bug"].any!((string pfx) => s.startsWith(pfx)))
                 s = s[3..$];
         if (["PR", "pr", "RH", "rh"].any!((string pfx) => s.startsWith(pfx)))
